@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Prompt IA</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0b0d12;
+  color:#fff;
+}
+.container{
+  max-width:600px;
+  margin:auto;
+  padding:20px;
+}
+h1{
+  text-align:center;
+  font-size:30px;
+  margin:10px 0 5px;
+}
+.subtitle{
+  text-align:center;
+  color:#9ca3af;
+  margin-bottom:25px;
+}
+.card{
+  background:#151922;
+  border:1px solid #272d3a;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:16px;
+}
+label{
+  display:block;
+  margin:14px 0 7px;
+  font-weight:bold;
+}
+input,textarea,select{
+  width:100%;
+  background:#0d1016;
+  color:#fff;
+  border:1px solid #303746;
+  border-radius:12px;
+  padding:13px;
+  font-size:15px;
+  outline:none;
+}
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+button{
+  width:100%;
+  border:0;
+  border-radius:13px;
+  padding:15px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.primary{
+  background:#4f8cff;
+  color:white;
+  margin-top:18px;
+}
+.secondary{
+  background:#252b38;
+  color:white;
+  margin-top:10px;
+}
+.result{
+  white-space:pre-wrap;
+  line-height:1.55;
+  color:#e5e7eb;
+  font-size:15px;
+}
+.badge{
+  display:inline-block;
+  background:#222938;
+  color:#8eb5ff;
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:12px;
+  margin:3px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>✨ Prompt IA</h1>
+<div class="subtitle">Gerador inteligente de prompts para imagens e vídeos</div>
+
+<div class="card">
+
+<label>O que você quer criar?</label>
+
+<div class="grid">
+<select id="tipo">
+<option>Imagem</option>
+<option>Vídeo</option>
+</select>
+
+<select id="estilo">
+<option>Produto</option>
+<option>UGC</option>
+<option>POV</option>
+<option>Publicidade</option>
+<option>Lifestyle</option>
+<option>Unboxing</option>
+</select>
+</div>
+
+<label>Descreva sua ideia</label>
+
+<textarea id="ideia"
+placeholder="Exemplo: uma mão feminina apresenta uma roupa sobre uma cama elegante..."></textarea>
+
+<label>Formato</label>
+
+<div class="grid">
+<select id="formato">
+<option>9:16 vertical</option>
+<option>16:9 horizontal</option>
+<option>1:1 quadrado</option>
+</select>
+
+<select id="qualidade">
+<option>Ultra hiper-realista 4K</option>
+<option>Realista 4K</option>
+<option>Cinematográfico 4K</option>
+</select>
+</div>
+
+<label>Cenário</label>
+
+<input id="cenario"
+placeholder="Ex.: quarto elegante, cama bem arrumada">
+
+<label>Ação principal</label>
+
+<input id="acao"
+placeholder="Ex.: mão pega o produto e apresenta para a câmera">
+
+<label>Fidelidade do produto</label>
+
+<input id="fidelidade"
+value="100% fiel ao produto de referência, sem alterar cor, modelo, tecido ou detalhes">
+
+<button class="primary" onclick="gerarPrompt()">
+✨ GERAR PROMPT
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Resultado</h2>
+
+<div id="resultado" class="result">
+Seu prompt aparecerá aqui.
+</div>
+
+<button class="secondary" onclick="copiarPrompt()">
+📋 COPIAR PROMPT
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function gerarPrompt(){
+
+const tipo=document.getElementById("tipo").value;
+const estilo=document.getElementById("estilo").value;
+const ideia=document.getElementById("ideia").value;
+const formato=document.getElementById("formato").value;
+const qualidade=document.getElementById("qualidade").value;
+const cenario=document.getElementById("cenario").value;
+const acao=document.getElementById("acao").value;
+const fidelidade=document.getElementById("fidelidade").value;
+
+if(!ideia.trim()){
+alert("Descreva primeiro a ideia do conteúdo.");
+return;
+}
+
+let prompt=`${qualidade}, ${formato}.
+
+TIPO DE CONTEÚDO:
+${tipo} no estilo ${estilo}.
+
+IDEIA:
+${ideia}
+
+CENÁRIO:
+${cenario || "cenário realista e bem produzido, com iluminação natural e ambiente organizado."}
+
+AÇÃO:
+${acao || "movimento natural e compreensível, com apresentação clara do produto."}
+
+FIDELIDADE DO PRODUTO:
+${fidelidade}.
+
+DIREÇÃO VISUAL:
+Composição profissional, iluminação natural e suave, câmera estável, profundidade de campo realista, detalhes nítidos, textura natural, proporções corretas e aparência fotográfica extremamente realista.
+
+CONTINUIDADE:
+Manter o mesmo produto, cenário, iluminação, câmera e elementos durante toda a cena. Não trocar, duplicar, deformar ou modificar o produto.
+
+RESTRIÇÕES:
+Sem pessoas extras, sem mãos extras, sem objetos surgindo ou desaparecendo, sem alterações no produto, sem deformações, sem texto aleatório, sem logotipos inventados e sem mudanças bruscas de cenário.
+
+RESULTADO:
+Criar uma cena comercial profissional, natural e convincente, pronta para conteúdo de redes sociais.`;
+
+document.getElementById("resultado").textContent=prompt;
+
+}
+
+function copiarPrompt(){
+
+const texto=document.getElementById("resultado").textContent;
+
+if(texto==="Seu prompt aparecerá aqui."){
+alert("Gere um prompt primeiro.");
+return;
+}
+
+navigator.clipboard.writeText(texto)
+.then(()=>alert("Prompt copiado!"))
+.catch(()=>alert("Selecione e copie o texto manualmente."));
+
+}
+
+</script>
+
+</body>
+</html>
