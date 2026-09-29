@@ -6,164 +6,200 @@
 <title>Prompt IA</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f4f5f7;
-  color:#171717;
+margin:0;
+background:#f3f4f6;
+color:#151515;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif
 }
 
 header{
-  background:linear-gradient(135deg,#111,#292929);
-  color:white;
-  padding:28px 18px;
-  text-align:center;
+text-align:center;
+padding:28px 18px 18px
 }
 
 header h1{
-  margin:0;
-  font-size:30px;
+margin:0;
+font-size:30px;
+font-weight:800
 }
 
 header p{
-  margin:8px 0 0;
-  color:#ccc;
+margin:7px 0 0;
+color:#6b7280
 }
 
 .container{
-  max-width:900px;
-  margin:auto;
-  padding:18px;
+max-width:760px;
+margin:auto;
+padding:0 14px 40px
 }
 
 .card{
-  background:white;
-  border-radius:18px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 4px 18px rgba(0,0,0,.08);
+background:#fff;
+border-radius:26px;
+padding:24px 20px;
+margin:14px 0;
+box-shadow:0 8px 25px rgba(0,0,0,.06)
 }
 
-.card h2{
-  margin-top:0;
-  font-size:20px;
+h2{
+font-size:25px;
+margin:0 0 18px;
+line-height:1.2
 }
 
-label{
-  display:block;
-  font-weight:bold;
-  margin:14px 0 7px;
+.title{
+display:block;
+font-weight:700;
+font-size:16px;
+margin:16px 0 9px
 }
 
-input,textarea,select{
-  width:100%;
-  padding:13px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  font-size:15px;
-  background:white;
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px
 }
 
-textarea{
-  min-height:100px;
-  resize:vertical;
+@media(max-width:520px){
+.grid{
+grid-template-columns:1fr
 }
-
-.options{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
 }
 
 .option{
-  border:1px solid #ddd;
-  padding:10px 13px;
-  border-radius:10px;
-  cursor:pointer;
-  background:#fafafa;
+border:1.5px solid #ddd;
+border-radius:15px;
+padding:13px 12px;
+background:#fff;
+cursor:pointer;
+font-size:15px;
+min-height:50px;
+text-align:left
 }
 
-.option.active{
-  background:#111;
-  color:white;
-  border-color:#111;
+.option.selected{
+background:#111;
+color:#fff;
+border-color:#111
+}
+
+input[type=text],
+textarea,
+select{
+width:100%;
+border:1.5px solid #ddd;
+border-radius:15px;
+padding:14px;
+font-size:16px;
+background:#fff
+}
+
+textarea{
+min-height:105px;
+resize:vertical
+}
+
+input[type=file]{
+width:100%;
+padding:13px;
+border:1.5px dashed #ccc;
+border-radius:15px;
+background:#f7f7f8
+}
+
+.file-note,
+.small{
+font-size:13px;
+color:#6b7280;
+margin-top:7px
+}
+
+.check{
+display:flex;
+gap:11px;
+align-items:flex-start;
+margin-top:18px;
+font-weight:700;
+line-height:1.35
+}
+
+.check input{
+width:22px;
+height:22px;
+accent-color:#111
 }
 
 .primary{
-  width:100%;
-  border:0;
-  border-radius:12px;
-  padding:16px;
-  font-size:17px;
-  font-weight:bold;
-  background:#111;
-  color:white;
-  cursor:pointer;
+width:100%;
+border:0;
+border-radius:18px;
+background:#111;
+color:#fff;
+padding:17px;
+font-size:18px;
+font-weight:800;
+cursor:pointer;
+margin-top:22px
 }
 
 .secondary{
-  border:1px solid #ddd;
-  border-radius:10px;
-  padding:11px 15px;
-  background:white;
-  cursor:pointer;
+border:1px solid #ddd;
+background:#fff;
+border-radius:14px;
+padding:12px 15px;
+font-weight:700;
+cursor:pointer
 }
 
-.upload{
-  border:2px dashed #ccc;
-  border-radius:12px;
-  padding:18px;
-  text-align:center;
-  margin-top:8px;
+.output{
+background:#111;
+color:#fff;
+border-radius:20px;
+padding:20px;
+min-height:230px;
+white-space:pre-wrap;
+line-height:1.55;
+font-size:15px;
+overflow-wrap:anywhere
 }
 
-.upload input{
-  border:0;
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-top:12px
 }
 
-.result{
-  background:#111;
-  color:#eee;
-  border-radius:12px;
-  padding:16px;
-  white-space:pre-wrap;
-  line-height:1.5;
-  min-height:150px;
+.badges{
+display:flex;
+gap:7px;
+flex-wrap:wrap;
+margin-top:12px
 }
 
-.tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin-top:12px;
+.badge{
+background:#eee;
+border-radius:999px;
+padding:7px 10px;
+font-size:12px;
+font-weight:700
 }
 
-.tag{
-  background:#eee;
-  padding:7px 10px;
-  border-radius:20px;
-  font-size:13px;
+.notice{
+background:#f4f4f5;
+border-radius:15px;
+padding:13px;
+font-size:13px;
+line-height:1.45;
+margin-top:12px
 }
 
-.small{
-  color:#777;
-  font-size:13px;
-}
-
-.row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-
-@media(max-width:600px){
-  .row{
-    grid-template-columns:1fr;
-  }
+.hidden{
+display:none
 }
 </style>
 </head>
@@ -171,352 +207,801 @@ textarea{
 <body>
 
 <header>
-  <h1>✨ Prompt IA</h1>
-  <p>Crie prompts profissionais para imagens e vídeos com IA</p>
+<h1>✨ Prompt IA</h1>
+<p>Crie prompts mais precisos para imagens e vídeos com IA</p>
 </header>
 
-<div class="container">
+<main class="container">
 
-<div class="card">
-  <h2>1. Tipo de prompt</h2>
+<section class="card">
 
-  <div class="options" id="tipoOptions">
-    <div class="option active" data-value="Imagem">🖼️ Imagem</div>
-    <div class="option" data-value="Vídeo">🎬 Vídeo</div>
-    <div class="option" data-value="POV">👀 POV</div>
-    <div class="option" data-value="UGC">📱 UGC</div>
-    <div class="option" data-value="Produto / TikTok Shop">🛍️ Produto / TikTok Shop</div>
-    <div class="option" data-value="Unboxing">📦 Unboxing</div>
-    <div class="option" data-value="Recriar vídeo">🔄 Recriar vídeo</div>
-    <div class="option" data-value="Foto + Vídeo">🖼️ + 🎬 Foto + Vídeo</div>
-  </div>
+<h2>1. Tipo de conteúdo</h2>
 
-  <label>Foto de referência do produto</label>
+<div class="grid" id="tipo">
 
-  <div class="upload">
-    <input type="file" id="foto" accept="image/*">
-    <div id="fotoNome" class="small">Nenhuma foto selecionada</div>
-  </div>
+<button class="option selected" data-v="Imagem">
+🖼️ Imagem
+</button>
 
-  <label>Vídeo de referência</label>
+<button class="option" data-v="Vídeo">
+🎬 Vídeo
+</button>
 
-  <div class="upload">
-    <input type="file" id="video" accept="video/*">
-    <div id="videoNome" class="small">Nenhum vídeo selecionado</div>
-  </div>
+<button class="option" data-v="POV">
+👁️ POV
+</button>
 
-  <p class="small">
-    A foto será usada como referência visual do produto e o vídeo como referência de movimento, câmera e estilo.
-  </p>
-</div>
+<button class="option" data-v="UGC">
+📱 UGC
+</button>
 
-<div class="card">
-  <h2>2. Descreva o que você quer criar</h2>
+<button class="option" data-v="Produto / TikTok Shop">
+🛍️ Produto / TikTok Shop
+</button>
 
-  <label>Produto / objeto</label>
-  <input id="produto" placeholder="Ex.: conjunto feminino de renda">
+<button class="option" data-v="Unboxing">
+📦 Unboxing
+</button>
 
-  <label>Cenário</label>
-  <textarea id="cenario" placeholder="Ex.: quarto elegante, produto sobre uma cama bem arrumada"></textarea>
+<button class="option" data-v="Recriar vídeo">
+🔄 Recriar vídeo
+</button>
 
-  <label>Ação / movimento</label>
-  <textarea id="acao" placeholder="Ex.: duas mãos pegam o produto, levantam e apresentam para a câmera"></textarea>
-
-  <div class="row">
-
-    <div>
-      <label>Movimento da câmera</label>
-      <select id="camera">
-        <option>Fixa</option>
-        <option>Close-up</option>
-        <option>Zoom suave</option>
-        <option>Movimento para frente</option>
-        <option>Movimento lateral</option>
-        <option>POV</option>
-      </select>
-    </div>
-
-    <div>
-      <label>Iluminação</label>
-      <select id="luz">
-        <option>Luz natural suave</option>
-        <option>Luz de estúdio</option>
-        <option>Luz quente</option>
-        <option>Luz fria</option>
-        <option>Iluminação cinematográfica</option>
-      </select>
-    </div>
-
-  </div>
-
-  <div class="row">
-
-    <div>
-      <label>Formato</label>
-      <select id="formato">
-        <option>9:16 vertical</option>
-        <option>16:9 horizontal</option>
-        <option>1:1 quadrado</option>
-      </select>
-    </div>
-
-    <div>
-      <label>Qualidade</label>
-      <select id="qualidade">
-        <option>Ultra hiper-realista, 4K</option>
-        <option>Hiper-realista, 4K</option>
-        <option>Cinematográfico, 4K</option>
-      </select>
-    </div>
-
-  </div>
-
-  <label>Duração do vídeo</label>
-  <select id="duracao">
-    <option>5 segundos</option>
-    <option>8 segundos</option>
-    <option>10 segundos</option>
-    <option>15 segundos</option>
-  </select>
-
-  <label>
-    <input type="checkbox" id="fidelidade" checked>
-    Preservar o produto exatamente como na referência
-  </label>
-
-  <button class="primary" onclick="gerarPrompt()">✨ GERAR PROMPT</button>
-
-</div><div class="card">
-  <h2>3. O que você quer fazer com o prompt?</h2>
-
-  <div class="options" id="saidaOptions">
-    <div class="option active" data-value="Prompt">📝 Prompt</div>
-    <div class="option" data-value="Imagem">🖼️ Gerar Imagem</div>
-    <div class="option" data-value="Vídeo">🎬 Gerar Vídeo</div>
-    <div class="option" data-value="Prompt + Imagem">📝 + 🖼️ Prompt + Imagem</div>
-    <div class="option" data-value="Prompt + Vídeo">📝 + 🎬 Prompt + Vídeo</div>
-  </div>
-</div>
-
-<div class="card">
-  <h2>4. Prompt gerado</h2>
-
-  <div id="resultado" class="result">
-    Seu prompt aparecerá aqui.
-  </div>
-
-  <div class="tags" id="tags"></div>
-
-  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:15px;">
-    <button class="secondary" onclick="copiarPrompt()">📋 Copiar prompt</button>
-    <button class="secondary" onclick="prepararGeracao()">🚀 Preparar geração</button>
-    <button class="secondary" onclick="limparTudo()">🗑️ Limpar</button>
-  </div>
-</div>
+<button class="option" data-v="Foto + Vídeo">
+📸 + 🎬 Foto + Vídeo
+</button>
 
 </div>
+
+</section>
+
+
+<section class="card">
+
+<h2>2. Configure seu prompt</h2>
+
+<label class="title">
+Foto do produto / referência
+</label>
+
+<input type="file" id="foto" accept="image/*">
+
+<div class="file-note" id="fotoNome">
+Nenhuma foto selecionada.
+</div>
+
+
+<label class="title">
+Vídeo de referência
+</label>
+
+<input type="file" id="video" accept="video/*">
+
+<div class="file-note" id="videoNome">
+Nenhum vídeo selecionado.
+</div>
+
+
+<div class="notice">
+Nesta versão, os arquivos são selecionados como referência. A análise automática real de foto e vídeo será conectada posteriormente por uma API segura.
+</div>
+
+
+<label class="title">
+Quem apresenta o produto?
+</label>
+
+<div class="grid" id="apresentador">
+
+<button class="option selected" data-v="Modelo">
+👩 Modelo
+</button>
+
+<button class="option" data-v="Somente mãos">
+👐 Somente mãos
+</button>
+
+<button class="option" data-v="Produto sozinho">
+📦 Produto sozinho
+</button>
+
+<button class="option" data-v="POV / primeira pessoa">
+👁️ POV / primeira pessoa
+</button>
+
+</div>
+
+
+<div id="modeloBox">
+
+<label class="title">
+Ação da modelo
+</label>
+
+<textarea id="acaoModelo">a modelo segura o produto com suas próprias mãos e apresenta a peça claramente para a câmera</textarea>
+
+</div>
+
+
+<label class="title">
+Cenário
+</label>
+
+<input
+type="text"
+id="cenario"
+value="quarto aconchegante e bem organizado"
+>
+
+
+<label class="title">
+Ação / movimento
+</label>
+
+<textarea id="acao">apresentar o produto de forma natural e clara para a câmera</textarea>
+
+
+<label class="title">
+Movimento da câmera
+</label>
+
+<input
+type="text"
+id="camera"
+value="zoom suave"
+>
+
+
+<label class="title">
+Iluminação
+</label>
+
+<input
+type="text"
+id="luz"
+value="iluminação natural suave e cinematográfica"
+>
+
+
+<label class="title">
+Formato
+</label>
+
+<div class="grid" id="formato">
+
+<button class="option selected" data-v="9:16 vertical">
+9:16 vertical
+</button>
+
+<button class="option" data-v="16:9 horizontal">
+16:9 horizontal
+</button>
+
+<button class="option" data-v="1:1 quadrado">
+1:1 quadrado
+</button>
+
+</div>
+
+
+<div id="duracaoBox">
+
+<label class="title">
+Duração do vídeo
+</label>
+
+<select id="duracao">
+
+<option>5 segundos</option>
+<option>8 segundos</option>
+<option>10 segundos</option>
+<option>15 segundos</option>
+<option>20 segundos</option>
+
+</select>
+
+</div>
+
+
+<label class="check">
+
+<input
+type="checkbox"
+id="preservar"
+checked
+>
+
+<span>
+Preservar o produto exatamente como na referência
+</span>
+
+</label>
+
+</section>
+
+
+<section class="card">
+
+<h2>
+3. O que você quer fazer com o prompt?
+</h2>
+
+<div class="grid" id="saida">
+
+<button class="option selected" data-v="Prompt">
+📝 Prompt
+</button>
+
+<button class="option" data-v="Gerar Imagem">
+🖼️ Gerar Imagem
+</button>
+
+<button class="option" data-v="Gerar Vídeo">
+🎬 Gerar Vídeo
+</button>
+
+<button class="option" data-v="Prompt + Imagem">
+📝 + 🖼️ Prompt + Imagem
+</button>
+
+<button class="option" data-v="Prompt + Vídeo">
+📝 + 🎬 Prompt + Vídeo
+</button>
+
+</div>
+
+
+<button
+class="primary"
+id="gerar"
+>
+✨ GERAR PROMPT
+</button>
+
+</section>
+
+
+<section class="card">
+
+<h2>
+4. Prompt gerado
+</h2>
+
+<div
+class="output"
+id="resultado"
+>
+Seu prompt aparecerá aqui.
+</div>
+
+<div
+class="badges"
+id="badges"
+>
+</div>
+
+<div class="actions">
+
+<button
+class="secondary"
+onclick="copiar()"
+>
+📋 Copiar prompt
+</button>
+
+<button
+class="secondary"
+onclick="limpar()"
+>
+🧹 Limpar
+</button>
+
+</div>
+
+</section>
+
+</main>
+
 
 <script>
 
-let tipo = "Imagem";
-let saida = "Prompt";
+let tipo="Imagem";
+let apresentador="Modelo";
+let formato="9:16 vertical";
+let saida="Prompt";
 
-document.querySelectorAll("#tipoOptions .option").forEach(el => {
 
-  el.addEventListener("click", () => {
+function grupo(id,fn){
 
-    document.querySelectorAll("#tipoOptions .option")
-      .forEach(x => x.classList.remove("active"));
+document.querySelectorAll("#"+id+" .option").forEach(b=>{
 
-    el.classList.add("active");
+b.onclick=()=>{
 
-    tipo = el.dataset.value;
+document
+.querySelectorAll("#"+id+" .option")
+.forEach(x=>x.classList.remove("selected"));
 
-  });
+b.classList.add("selected");
 
-});
+fn(b.dataset.v);
 
-document.querySelectorAll("#saidaOptions .option").forEach(el => {
-
-  el.addEventListener("click", () => {
-
-    document.querySelectorAll("#saidaOptions .option")
-      .forEach(x => x.classList.remove("active"));
-
-    el.classList.add("active");
-
-    saida = el.dataset.value;
-
-  });
+};
 
 });
 
-document.getElementById("foto").addEventListener("change", function(){
+}
 
-  document.getElementById("fotoNome").textContent =
-    this.files.length
-    ? "Foto selecionada: " + this.files[0].name
-    : "Nenhuma foto selecionada";
+
+grupo("tipo",v=>{
+
+tipo=v;
+
+interfaceAtual();
+
+});
+
+
+grupo("apresentador",v=>{
+
+apresentador=v;
+
+interfaceAtual();
 
 });
 
-document.getElementById("video").addEventListener("change", function(){
 
-  document.getElementById("videoNome").textContent =
-    this.files.length
-    ? "Vídeo selecionado: " + this.files[0].name
-    : "Nenhum vídeo selecionado";
+grupo("formato",v=>{
+
+formato=v;
 
 });
+
+
+grupo("saida",v=>{
+
+saida=v;
+
+});
+
+
+document
+.getElementById("foto")
+.onchange=e=>{
+
+document
+.getElementById("fotoNome")
+.textContent=
+
+e.target.files.length
+
+?
+
+"Foto selecionada: "
++
+e.target.files[0].name
+
+:
+
+"Nenhuma foto selecionada.";
+
+};
+
+
+document
+.getElementById("video")
+.onchange=e=>{
+
+document
+.getElementById("videoNome")
+.textContent=
+
+e.target.files.length
+
+?
+
+"Vídeo selecionado: "
++
+e.target.files[0].name
+
+:
+
+"Nenhum vídeo selecionado.";
+
+};
+
+
+function interfaceAtual(){
+
+let video=[
+"Vídeo",
+"POV",
+"UGC",
+"Unboxing",
+"Recriar vídeo",
+"Foto + Vídeo"
+].includes(tipo);
+
+document
+.getElementById("duracaoBox")
+.classList
+.toggle("hidden",!video);
+
+document
+.getElementById("modeloBox")
+.classList
+.toggle(
+"hidden",
+apresentador!=="Modelo"
+);
+
+}
+
 
 function gerarPrompt(){
 
-  const produto =
-    document.getElementById("produto").value ||
-    "produto da imagem de referência";
+let c=
+document
+.getElementById("cenario")
+.value
+.trim();
 
-  const cenario =
-    document.getElementById("cenario").value ||
-    "cenário realista e elegante";
+let a=
+document
+.getElementById("acao")
+.value
+.trim();
 
-  const acao =
-    document.getElementById("acao").value ||
-    "apresentar o produto claramente para a câmera";
+let cam=
+document
+.getElementById("camera")
+.value
+.trim();
 
-  const camera =
-    document.getElementById("camera").value;
+let luz=
+document
+.getElementById("luz")
+.value
+.trim();
 
-  const luz =
-    document.getElementById("luz").value;
+let dur=
+document
+.getElementById("duracao")
+.value;
 
-  const formato =
-    document.getElementById("formato").value;
+let preservar=
+document
+.getElementById("preservar")
+.checked;
 
-  const qualidade =
-    document.getElementById("qualidade").value;
+let foto=
+document
+.getElementById("foto")
+.files
+.length;
 
-  const duracao =
-    document.getElementById("duracao").value;
+let video=
+document
+.getElementById("video")
+.files
+.length;
 
-  const fidelidade =
-    document.getElementById("fidelidade").checked;
 
-  let prompt = "";
+let p="";
 
-  prompt += qualidade + ". ";
-  prompt += formato + ". ";
 
-  prompt += "Criar uma cena profissional para conteúdo digital. ";
+if(tipo==="Imagem"){
 
-  prompt += "Produto: " + produto + ". ";
+p+=
+"CRIAR UMA IMAGEM ESTÁTICA. "+
+"NÃO É VÍDEO. "+
+"NÃO HÁ ANIMAÇÃO E NÃO HÁ MOVIMENTO. ";
 
-  prompt += "Cenário: " + cenario + ". ";
+}else{
 
-  prompt += "Ação: " + acao + ". ";
-
-  prompt += "Movimento da câmera: " + camera + ". ";
-
-  prompt += "Iluminação: " + luz + ". ";
-
-  if(tipo === "Vídeo"){
-    prompt += "Vídeo com movimento natural e realista, duração de " + duracao + ". ";
-  }
-
-  if(tipo === "POV"){
-    prompt += "Estilo POV, como se a câmera estivesse sendo segurada pela própria pessoa, com movimento natural e imersivo. ";
-  }
-
-  if(tipo === "UGC"){
-    prompt += "Estilo UGC autêntico, natural e espontâneo, aparência de conteúdo gravado para redes sociais. ";
-  }
-
-  if(tipo === "Produto / TikTok Shop"){
-    prompt += "Estilo demonstração de produto para TikTok Shop, valorizando claramente o produto e seus detalhes. ";
-  }
-
-  if(tipo === "Unboxing"){
-    prompt += "Estilo unboxing realista, mostrando claramente a abertura da embalagem e a retirada do produto de dentro dela. ";
-  }
-
-  if(tipo === "Recriar vídeo"){
-    prompt += "Usar o vídeo de referência como base para reproduzir a composição, movimento, enquadramento e dinâmica da cena, mantendo o produto da foto como referência principal. ";
-  }
-
-  if(tipo === "Foto + Vídeo"){
-    prompt += "Usar a foto como referência exata do produto e o vídeo como referência para movimento, câmera, ação e estilo. ";
-  }
-
-  if(fidelidade){
-
-    prompt +=
-      "IMPORTANTE: preservar o produto exatamente como na imagem de referência, sem alterar cor, modelo, formato, tecido, textura, acabamento, proporções, detalhes ou características originais. Não substituir, modificar, adicionar ou remover partes do produto. ";
-
-  }
-
-  prompt +=
-    "Manter aparência ultra-realista, física natural, mãos anatomicamente corretas, sem objetos extras, sem deformações, sem texto aleatório, sem logotipos inventados e sem alterar a identidade do produto.";
-
-  document.getElementById("resultado").textContent = prompt;
-
-  document.getElementById("tags").innerHTML = `
-    <span class="tag">${tipo}</span>
-    <span class="tag">${formato}</span>
-    <span class="tag">${qualidade}</span>
-    <span class="tag">${saida}</span>
-  `;
-
-}function prepararGeracao(){
-
-  const prompt = document.getElementById("resultado").textContent;
-
-  if(!prompt || prompt === "Seu prompt aparecerá aqui."){
-    alert("Primeiro gere um prompt.");
-    return;
-  }
-
-  alert(
-    "Prompt preparado para: " + saida +
-    "\n\nNesta versão do aplicativo, a geração real de imagem/vídeo ainda precisa ser conectada a uma IA."
-  );
+p+="CRIAR UM VÍDEO REALISTA. ";
 
 }
 
-function copiarPrompt(){
 
-  const texto = document.getElementById("resultado").textContent;
+p+=
+"Ultra-hiper-realista, 4K, formato "
++
+formato
++
+". ";
 
-  if(!texto || texto === "Seu prompt aparecerá aqui."){
-    alert("Primeiro gere um prompt.");
-    return;
-  }
+p+=
+"Cena profissional para conteúdo digital. "+
+"Tipo de conteúdo: "
++
+tipo
++
+". ";
 
-  navigator.clipboard.writeText(texto)
-    .then(() => alert("Prompt copiado!"))
-    .catch(() => alert("Não foi possível copiar automaticamente."));
+p+=
+"Cenário: "
++
+(c||"ambiente profissional e natural")
++
+". ";
+
+
+if(apresentador==="Modelo"){
+
+let am=
+document
+.getElementById("acaoModelo")
+.value
+.trim();
+
+p+=
+"Uma única modelo feminina apresenta o produto. "
++
+(am||
+"A modelo segura o produto com suas próprias mãos e apresenta para a câmera")
++
+". ";
+
+p+=
+"AS MÃOS VISÍVEIS DEVEM PERTENCER EXCLUSIVAMENTE À PRÓPRIA MODELO. ";
+
+p+=
+"Não adicionar mãos, braços, pessoas, avatares ou apresentadores extras. ";
+
+p+=
+"Não criar mãos flutuantes, duplicadas ou pertencentes a outra pessoa. ";
 
 }
 
-function limparTudo(){
 
-  document.getElementById("produto").value = "";
-  document.getElementById("cenario").value = "";
-  document.getElementById("acao").value = "";
+if(apresentador==="Somente mãos"){
 
-  document.getElementById("foto").value = "";
-  document.getElementById("video").value = "";
+p+=
+"Mostrar somente duas mãos femininas apresentando o produto. ";
 
-  document.getElementById("fotoNome").textContent =
-    "Nenhuma foto selecionada";
+p+=
+"Não mostrar modelo, rosto, corpo ou pessoa. ";
 
-  document.getElementById("videoNome").textContent =
-    "Nenhum vídeo selecionado";
-
-  document.getElementById("resultado").textContent =
-    "Seu prompt aparecerá aqui.";
-
-  document.getElementById("tags").innerHTML = "";
+p+=
+"Não adicionar mãos ou braços extras além das duas mãos solicitadas. ";
 
 }
+
+
+if(apresentador==="Produto sozinho"){
+
+p+=
+"Mostrar somente o produto. "+
+"Não mostrar modelo, pessoa, avatar, mãos ou braços. ";
+
+}
+
+
+if(apresentador==="POV / primeira pessoa"){
+
+p+=
+"Cena em primeira pessoa (POV), como se a câmera fosse os olhos da pessoa. ";
+
+p+=
+"Não mostrar uma segunda pessoa ou apresentador separado. ";
+
+}
+
+
+p+=
+"Ação principal: "
++
+(a||"apresentar o produto claramente")
++
+". ";
+
+p+=
+"Movimento da câmera: "
++
+(cam||"câmera estável")
++
+". ";
+
+p+=
+"Iluminação: "
++
+(luz||"iluminação natural suave")
++
+". ";
+
+
+if([
+"Vídeo",
+"POV",
+"UGC",
+"Unboxing",
+"Recriar vídeo",
+"Foto + Vídeo"
+].includes(tipo)){
+
+p+=
+"Duração: "
++
+dur
++
+". ";
+
+p+=
+"Movimento natural e contínuo, sem cortes desnecessários e sem mudanças repentinas de cenário ou produto. ";
+
+}
+
+
+if(tipo==="Imagem"){
+
+p+=
+"Composição fotográfica estática, sem movimento. ";
+
+}
+
+
+if(foto){
+
+p+=
+"Usar a foto de referência para identificar exatamente o produto. ";
+
+}
+
+
+if(video){
+
+p+=
+"Usar o vídeo de referência somente para ação, movimento, enquadramento e estilo. ";
+
+}
+
+
+if(foto&&video){
+
+p+=
+"A FOTO define a identidade exata do produto; "+
+"o VÍDEO define somente ação, movimento e linguagem visual. ";
+
+}
+
+
+if(preservar){
+
+p+=
+"IMPORTANTE: preservar o produto exatamente como na imagem de referência, "+
+"sem alterar cor, modelo, formato, tecido, textura, acabamento, proporções, detalhes ou características originais. ";
+
+p+=
+"Não substituir, modificar, adicionar ou remover partes do produto. ";
+
+}
+
+
+p+=
+"Manter aparência ultra-realista, anatomia correta quando houver pessoas, física natural e composição coerente. ";
+
+p+=
+"Não adicionar objetos, pessoas, mãos, braços ou elementos não solicitados. ";
+
+p+=
+"Não criar deformações, duplicações, membros extras, texto aleatório ou logotipos inventados. ";
+
+
+if(saida==="Gerar Imagem"){
+
+p+=
+"RESULTADO DESEJADO: somente uma imagem estática.";
+
+}
+
+else if(saida==="Gerar Vídeo"){
+
+p+=
+"RESULTADO DESEJADO: somente um vídeo.";
+
+}
+
+else if(saida==="Prompt + Imagem"){
+
+p+=
+"RESULTADO DESEJADO: gerar o prompt e uma imagem estática.";
+
+}
+
+else if(saida==="Prompt + Vídeo"){
+
+p+=
+"RESULTADO DESEJADO: gerar o prompt e um vídeo.";
+
+}
+
+else{
+
+p+=
+"RESULTADO DESEJADO: somente o prompt.";
+
+}
+
+
+document
+.getElementById("resultado")
+.textContent=p;
+
+
+document
+.getElementById("badges")
+.innerHTML=
+
+[
+"Tipo: "+tipo,
+"Apresentador: "+apresentador,
+"Formato: "+formato,
+"Saída: "+saida
+]
+
+.map(x=>
+"<span class='badge'>"+
+x+
+"</span>"
+)
+.join("");
+
+
+document
+.getElementById("resultado")
+.scrollIntoView({
+behavior:"smooth",
+block:"center"
+});
+
+}
+
+
+function copiar(){
+
+let t=
+document
+.getElementById("resultado")
+.textContent;
+
+if(t==="Seu prompt aparecerá aqui."){
+
+alert("Gere um prompt primeiro.");
+
+return;
+
+}
+
+navigator
+.clipboard
+.writeText(t)
+.then(()=>
+alert("Prompt copiado!")
+);
+
+}
+
+
+function limpar(){
+
+document
+.getElementById("resultado")
+.textContent=
+"Seu prompt aparecerá aqui.";
+
+document
+.getElementById("badges")
+.innerHTML="";
+
+}
+
+
+document
+.getElementById("gerar")
+.onclick=gerarPrompt;
+
+
+interfaceAtual();
 
 </script>
 
