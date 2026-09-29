@@ -2,248 +2,519 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prompt IA</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#0b0d12;
-  color:#fff;
+  background:#f4f5f7;
+  color:#171717;
 }
-.container{
-  max-width:600px;
-  margin:auto;
-  padding:20px;
-}
-h1{
+
+header{
+  background:linear-gradient(135deg,#111,#292929);
+  color:white;
+  padding:28px 18px;
   text-align:center;
+}
+
+header h1{
+  margin:0;
   font-size:30px;
-  margin:10px 0 5px;
 }
-.subtitle{
-  text-align:center;
-  color:#9ca3af;
-  margin-bottom:25px;
+
+header p{
+  margin:8px 0 0;
+  color:#ccc;
 }
-.card{
-  background:#151922;
-  border:1px solid #272d3a;
-  border-radius:18px;
+
+.container{
+  max-width:900px;
+  margin:auto;
   padding:18px;
-  margin-bottom:16px;
 }
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 4px 18px rgba(0,0,0,.08);
+}
+
+.card h2{
+  margin-top:0;
+  font-size:20px;
+}
+
 label{
   display:block;
-  margin:14px 0 7px;
   font-weight:bold;
+  margin:14px 0 7px;
 }
+
 input,textarea,select{
   width:100%;
-  background:#0d1016;
-  color:#fff;
-  border:1px solid #303746;
-  border-radius:12px;
   padding:13px;
+  border:1px solid #ddd;
+  border-radius:10px;
   font-size:15px;
-  outline:none;
+  background:white;
 }
+
 textarea{
   min-height:100px;
   resize:vertical;
 }
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+
+.options{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
 }
-button{
+
+.option{
+  border:1px solid #ddd;
+  padding:10px 13px;
+  border-radius:10px;
+  cursor:pointer;
+  background:#fafafa;
+}
+
+.option.active{
+  background:#111;
+  color:white;
+  border-color:#111;
+}
+
+.primary{
   width:100%;
   border:0;
-  border-radius:13px;
-  padding:15px;
-  font-size:16px;
+  border-radius:12px;
+  padding:16px;
+  font-size:17px;
   font-weight:bold;
+  background:#111;
+  color:white;
   cursor:pointer;
 }
-.primary{
-  background:#4f8cff;
-  color:white;
-  margin-top:18px;
-}
+
 .secondary{
-  background:#252b38;
-  color:white;
-  margin-top:10px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:11px 15px;
+  background:white;
+  cursor:pointer;
 }
+
+.upload{
+  border:2px dashed #ccc;
+  border-radius:12px;
+  padding:18px;
+  text-align:center;
+  margin-top:8px;
+}
+
+.upload input{
+  border:0;
+}
+
 .result{
+  background:#111;
+  color:#eee;
+  border-radius:12px;
+  padding:16px;
   white-space:pre-wrap;
-  line-height:1.55;
-  color:#e5e7eb;
-  font-size:15px;
+  line-height:1.5;
+  min-height:150px;
 }
-.badge{
-  display:inline-block;
-  background:#222938;
-  color:#8eb5ff;
-  padding:6px 10px;
+
+.tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:12px;
+}
+
+.tag{
+  background:#eee;
+  padding:7px 10px;
   border-radius:20px;
-  font-size:12px;
-  margin:3px;
+  font-size:13px;
+}
+
+.small{
+  color:#777;
+  font-size:13px;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+@media(max-width:600px){
+  .row{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<header>
+  <h1>✨ Prompt IA</h1>
+  <p>Crie prompts profissionais para imagens e vídeos com IA</p>
+</header>
+
 <div class="container">
 
-<h1>✨ Prompt IA</h1>
-<div class="subtitle">Gerador inteligente de prompts para imagens e vídeos</div>
-
 <div class="card">
+  <h2>1. Tipo de prompt</h2>
 
-<label>O que você quer criar?</label>
+  <div class="options" id="tipoOptions">
+    <div class="option active" data-value="Imagem">🖼️ Imagem</div>
+    <div class="option" data-value="Vídeo">🎬 Vídeo</div>
+    <div class="option" data-value="POV">👀 POV</div>
+    <div class="option" data-value="UGC">📱 UGC</div>
+    <div class="option" data-value="Produto / TikTok Shop">🛍️ Produto / TikTok Shop</div>
+    <div class="option" data-value="Unboxing">📦 Unboxing</div>
+    <div class="option" data-value="Recriar vídeo">🔄 Recriar vídeo</div>
+    <div class="option" data-value="Foto + Vídeo">🖼️ + 🎬 Foto + Vídeo</div>
+  </div>
 
-<div class="grid">
-<select id="tipo">
-<option>Imagem</option>
-<option>Vídeo</option>
-</select>
+  <label>Foto de referência do produto</label>
 
-<select id="estilo">
-<option>Produto</option>
-<option>UGC</option>
-<option>POV</option>
-<option>Publicidade</option>
-<option>Lifestyle</option>
-<option>Unboxing</option>
-</select>
-</div>
+  <div class="upload">
+    <input type="file" id="foto" accept="image/*">
+    <div id="fotoNome" class="small">Nenhuma foto selecionada</div>
+  </div>
 
-<label>Descreva sua ideia</label>
+  <label>Vídeo de referência</label>
 
-<textarea id="ideia"
-placeholder="Exemplo: uma mão feminina apresenta uma roupa sobre uma cama elegante..."></textarea>
+  <div class="upload">
+    <input type="file" id="video" accept="video/*">
+    <div id="videoNome" class="small">Nenhum vídeo selecionado</div>
+  </div>
 
-<label>Formato</label>
-
-<div class="grid">
-<select id="formato">
-<option>9:16 vertical</option>
-<option>16:9 horizontal</option>
-<option>1:1 quadrado</option>
-</select>
-
-<select id="qualidade">
-<option>Ultra hiper-realista 4K</option>
-<option>Realista 4K</option>
-<option>Cinematográfico 4K</option>
-</select>
-</div>
-
-<label>Cenário</label>
-
-<input id="cenario"
-placeholder="Ex.: quarto elegante, cama bem arrumada">
-
-<label>Ação principal</label>
-
-<input id="acao"
-placeholder="Ex.: mão pega o produto e apresenta para a câmera">
-
-<label>Fidelidade do produto</label>
-
-<input id="fidelidade"
-value="100% fiel ao produto de referência, sem alterar cor, modelo, tecido ou detalhes">
-
-<button class="primary" onclick="gerarPrompt()">
-✨ GERAR PROMPT
-</button>
-
+  <p class="small">
+    A foto será usada como referência visual do produto e o vídeo como referência de movimento, câmera e estilo.
+  </p>
 </div>
 
 <div class="card">
+  <h2>2. Descreva o que você quer criar</h2>
 
-<h2>Resultado</h2>
+  <label>Produto / objeto</label>
+  <input id="produto" placeholder="Ex.: conjunto feminino de renda">
 
-<div id="resultado" class="result">
-Seu prompt aparecerá aqui.
+  <label>Cenário</label>
+  <textarea id="cenario" placeholder="Ex.: quarto elegante, produto sobre uma cama bem arrumada"></textarea>
+
+  <label>Ação / movimento</label>
+  <textarea id="acao" placeholder="Ex.: duas mãos pegam o produto, levantam e apresentam para a câmera"></textarea>
+
+  <div class="row">
+
+    <div>
+      <label>Movimento da câmera</label>
+      <select id="camera">
+        <option>Fixa</option>
+        <option>Close-up</option>
+        <option>Zoom suave</option>
+        <option>Movimento para frente</option>
+        <option>Movimento lateral</option>
+        <option>POV</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Iluminação</label>
+      <select id="luz">
+        <option>Luz natural suave</option>
+        <option>Luz de estúdio</option>
+        <option>Luz quente</option>
+        <option>Luz fria</option>
+        <option>Iluminação cinematográfica</option>
+      </select>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div>
+      <label>Formato</label>
+      <select id="formato">
+        <option>9:16 vertical</option>
+        <option>16:9 horizontal</option>
+        <option>1:1 quadrado</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Qualidade</label>
+      <select id="qualidade">
+        <option>Ultra hiper-realista, 4K</option>
+        <option>Hiper-realista, 4K</option>
+        <option>Cinematográfico, 4K</option>
+      </select>
+    </div>
+
+  </div>
+
+  <label>Duração do vídeo</label>
+  <select id="duracao">
+    <option>5 segundos</option>
+    <option>8 segundos</option>
+    <option>10 segundos</option>
+    <option>15 segundos</option>
+  </select>
+
+  <label>
+    <input type="checkbox" id="fidelidade" checked>
+    Preservar o produto exatamente como na referência
+  </label>
+
+  <button class="primary" onclick="gerarPrompt()">✨ GERAR PROMPT</button>
+
+</div><div class="card">
+  <h2>3. O que você quer fazer com o prompt?</h2>
+
+  <div class="options" id="saidaOptions">
+    <div class="option active" data-value="Prompt">📝 Prompt</div>
+    <div class="option" data-value="Imagem">🖼️ Gerar Imagem</div>
+    <div class="option" data-value="Vídeo">🎬 Gerar Vídeo</div>
+    <div class="option" data-value="Prompt + Imagem">📝 + 🖼️ Prompt + Imagem</div>
+    <div class="option" data-value="Prompt + Vídeo">📝 + 🎬 Prompt + Vídeo</div>
+  </div>
 </div>
 
-<button class="secondary" onclick="copiarPrompt()">
-📋 COPIAR PROMPT
-</button>
+<div class="card">
+  <h2>4. Prompt gerado</h2>
 
+  <div id="resultado" class="result">
+    Seu prompt aparecerá aqui.
+  </div>
+
+  <div class="tags" id="tags"></div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:15px;">
+    <button class="secondary" onclick="copiarPrompt()">📋 Copiar prompt</button>
+    <button class="secondary" onclick="prepararGeracao()">🚀 Preparar geração</button>
+    <button class="secondary" onclick="limparTudo()">🗑️ Limpar</button>
+  </div>
 </div>
 
 </div>
 
 <script>
 
+let tipo = "Imagem";
+let saida = "Prompt";
+
+document.querySelectorAll("#tipoOptions .option").forEach(el => {
+
+  el.addEventListener("click", () => {
+
+    document.querySelectorAll("#tipoOptions .option")
+      .forEach(x => x.classList.remove("active"));
+
+    el.classList.add("active");
+
+    tipo = el.dataset.value;
+
+  });
+
+});
+
+document.querySelectorAll("#saidaOptions .option").forEach(el => {
+
+  el.addEventListener("click", () => {
+
+    document.querySelectorAll("#saidaOptions .option")
+      .forEach(x => x.classList.remove("active"));
+
+    el.classList.add("active");
+
+    saida = el.dataset.value;
+
+  });
+
+});
+
+document.getElementById("foto").addEventListener("change", function(){
+
+  document.getElementById("fotoNome").textContent =
+    this.files.length
+    ? "Foto selecionada: " + this.files[0].name
+    : "Nenhuma foto selecionada";
+
+});
+
+document.getElementById("video").addEventListener("change", function(){
+
+  document.getElementById("videoNome").textContent =
+    this.files.length
+    ? "Vídeo selecionado: " + this.files[0].name
+    : "Nenhum vídeo selecionado";
+
+});
+
 function gerarPrompt(){
 
-const tipo=document.getElementById("tipo").value;
-const estilo=document.getElementById("estilo").value;
-const ideia=document.getElementById("ideia").value;
-const formato=document.getElementById("formato").value;
-const qualidade=document.getElementById("qualidade").value;
-const cenario=document.getElementById("cenario").value;
-const acao=document.getElementById("acao").value;
-const fidelidade=document.getElementById("fidelidade").value;
+  const produto =
+    document.getElementById("produto").value ||
+    "produto da imagem de referência";
 
-if(!ideia.trim()){
-alert("Descreva primeiro a ideia do conteúdo.");
-return;
-}
+  const cenario =
+    document.getElementById("cenario").value ||
+    "cenário realista e elegante";
 
-let prompt=`${qualidade}, ${formato}.
+  const acao =
+    document.getElementById("acao").value ||
+    "apresentar o produto claramente para a câmera";
 
-TIPO DE CONTEÚDO:
-${tipo} no estilo ${estilo}.
+  const camera =
+    document.getElementById("camera").value;
 
-IDEIA:
-${ideia}
+  const luz =
+    document.getElementById("luz").value;
 
-CENÁRIO:
-${cenario || "cenário realista e bem produzido, com iluminação natural e ambiente organizado."}
+  const formato =
+    document.getElementById("formato").value;
 
-AÇÃO:
-${acao || "movimento natural e compreensível, com apresentação clara do produto."}
+  const qualidade =
+    document.getElementById("qualidade").value;
 
-FIDELIDADE DO PRODUTO:
-${fidelidade}.
+  const duracao =
+    document.getElementById("duracao").value;
 
-DIREÇÃO VISUAL:
-Composição profissional, iluminação natural e suave, câmera estável, profundidade de campo realista, detalhes nítidos, textura natural, proporções corretas e aparência fotográfica extremamente realista.
+  const fidelidade =
+    document.getElementById("fidelidade").checked;
 
-CONTINUIDADE:
-Manter o mesmo produto, cenário, iluminação, câmera e elementos durante toda a cena. Não trocar, duplicar, deformar ou modificar o produto.
+  let prompt = "";
 
-RESTRIÇÕES:
-Sem pessoas extras, sem mãos extras, sem objetos surgindo ou desaparecendo, sem alterações no produto, sem deformações, sem texto aleatório, sem logotipos inventados e sem mudanças bruscas de cenário.
+  prompt += qualidade + ". ";
+  prompt += formato + ". ";
 
-RESULTADO:
-Criar uma cena comercial profissional, natural e convincente, pronta para conteúdo de redes sociais.`;
+  prompt += "Criar uma cena profissional para conteúdo digital. ";
 
-document.getElementById("resultado").textContent=prompt;
+  prompt += "Produto: " + produto + ". ";
+
+  prompt += "Cenário: " + cenario + ". ";
+
+  prompt += "Ação: " + acao + ". ";
+
+  prompt += "Movimento da câmera: " + camera + ". ";
+
+  prompt += "Iluminação: " + luz + ". ";
+
+  if(tipo === "Vídeo"){
+    prompt += "Vídeo com movimento natural e realista, duração de " + duracao + ". ";
+  }
+
+  if(tipo === "POV"){
+    prompt += "Estilo POV, como se a câmera estivesse sendo segurada pela própria pessoa, com movimento natural e imersivo. ";
+  }
+
+  if(tipo === "UGC"){
+    prompt += "Estilo UGC autêntico, natural e espontâneo, aparência de conteúdo gravado para redes sociais. ";
+  }
+
+  if(tipo === "Produto / TikTok Shop"){
+    prompt += "Estilo demonstração de produto para TikTok Shop, valorizando claramente o produto e seus detalhes. ";
+  }
+
+  if(tipo === "Unboxing"){
+    prompt += "Estilo unboxing realista, mostrando claramente a abertura da embalagem e a retirada do produto de dentro dela. ";
+  }
+
+  if(tipo === "Recriar vídeo"){
+    prompt += "Usar o vídeo de referência como base para reproduzir a composição, movimento, enquadramento e dinâmica da cena, mantendo o produto da foto como referência principal. ";
+  }
+
+  if(tipo === "Foto + Vídeo"){
+    prompt += "Usar a foto como referência exata do produto e o vídeo como referência para movimento, câmera, ação e estilo. ";
+  }
+
+  if(fidelidade){
+
+    prompt +=
+      "IMPORTANTE: preservar o produto exatamente como na imagem de referência, sem alterar cor, modelo, formato, tecido, textura, acabamento, proporções, detalhes ou características originais. Não substituir, modificar, adicionar ou remover partes do produto. ";
+
+  }
+
+  prompt +=
+    "Manter aparência ultra-realista, física natural, mãos anatomicamente corretas, sem objetos extras, sem deformações, sem texto aleatório, sem logotipos inventados e sem alterar a identidade do produto.";
+
+  document.getElementById("resultado").textContent = prompt;
+
+  document.getElementById("tags").innerHTML = `
+    <span class="tag">${tipo}</span>
+    <span class="tag">${formato}</span>
+    <span class="tag">${qualidade}</span>
+    <span class="tag">${saida}</span>
+  `;
+
+}function prepararGeracao(){
+
+  const prompt = document.getElementById("resultado").textContent;
+
+  if(!prompt || prompt === "Seu prompt aparecerá aqui."){
+    alert("Primeiro gere um prompt.");
+    return;
+  }
+
+  alert(
+    "Prompt preparado para: " + saida +
+    "\n\nNesta versão do aplicativo, a geração real de imagem/vídeo ainda precisa ser conectada a uma IA."
+  );
 
 }
 
 function copiarPrompt(){
 
-const texto=document.getElementById("resultado").textContent;
+  const texto = document.getElementById("resultado").textContent;
 
-if(texto==="Seu prompt aparecerá aqui."){
-alert("Gere um prompt primeiro.");
-return;
+  if(!texto || texto === "Seu prompt aparecerá aqui."){
+    alert("Primeiro gere um prompt.");
+    return;
+  }
+
+  navigator.clipboard.writeText(texto)
+    .then(() => alert("Prompt copiado!"))
+    .catch(() => alert("Não foi possível copiar automaticamente."));
+
 }
 
-navigator.clipboard.writeText(texto)
-.then(()=>alert("Prompt copiado!"))
-.catch(()=>alert("Selecione e copie o texto manualmente."));
+function limparTudo(){
+
+  document.getElementById("produto").value = "";
+  document.getElementById("cenario").value = "";
+  document.getElementById("acao").value = "";
+
+  document.getElementById("foto").value = "";
+  document.getElementById("video").value = "";
+
+  document.getElementById("fotoNome").textContent =
+    "Nenhuma foto selecionada";
+
+  document.getElementById("videoNome").textContent =
+    "Nenhum vídeo selecionado";
+
+  document.getElementById("resultado").textContent =
+    "Seu prompt aparecerá aqui.";
+
+  document.getElementById("tags").innerHTML = "";
 
 }
 
