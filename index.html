@@ -3,1005 +3,1375 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111827">
 <title>Prompt IA</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
 body{
-margin:0;
-background:#f3f4f6;
-color:#151515;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif
-}
-
-header{
-text-align:center;
-padding:28px 18px 18px
-}
-
-header h1{
-margin:0;
-font-size:30px;
-font-weight:800
-}
-
-header p{
-margin:7px 0 0;
-color:#6b7280
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(circle at top left,#e0e7ff 0%,transparent 32%),
+    radial-gradient(circle at top right,#fce7f3 0%,transparent 30%),
+    #f5f7fb;
+  color:#111827;
+  min-height:100vh;
 }
 
 .container{
-max-width:760px;
-margin:auto;
-padding:0 14px 40px
+  width:100%;
+  max-width:760px;
+  margin:auto;
+  padding:18px 14px 50px;
 }
+
+/* HEADER */
+
+.header{
+  background:linear-gradient(135deg,#111827,#312e81 55%,#7c3aed);
+  color:white;
+  border-radius:26px;
+  padding:25px 22px;
+  margin-bottom:18px;
+  box-shadow:0 15px 40px rgba(49,46,129,.25);
+  position:relative;
+  overflow:hidden;
+}
+
+.header:after{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  right:-60px;
+  top:-70px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  position:relative;
+  z-index:2;
+}
+
+.logo-icon{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.2);
+  font-size:25px;
+}
+
+.logo h1{
+  font-size:25px;
+  font-weight:800;
+}
+
+.logo p{
+  font-size:13px;
+  opacity:.8;
+  margin-top:2px;
+}
+
+.header-description{
+  margin-top:18px;
+  font-size:14px;
+  line-height:1.5;
+  color:#e5e7eb;
+  position:relative;
+  z-index:2;
+}
+
+/* CARDS */
 
 .card{
-background:#fff;
-border-radius:26px;
-padding:24px 20px;
-margin:14px 0;
-box-shadow:0 8px 25px rgba(0,0,0,.06)
+  background:rgba(255,255,255,.94);
+  border:1px solid rgba(229,231,235,.9);
+  border-radius:24px;
+  padding:20px;
+  margin-bottom:16px;
+  box-shadow:0 8px 28px rgba(15,23,42,.07);
+  backdrop-filter:blur(8px);
 }
 
-h2{
-font-size:25px;
-margin:0 0 18px;
-line-height:1.2
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  margin-bottom:17px;
 }
 
-.title{
-display:block;
-font-weight:700;
-font-size:16px;
-margin:16px 0 9px
+.number{
+  width:34px;
+  height:34px;
+  min-width:34px;
+  border-radius:11px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:14px;
+  font-weight:800;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);
+  box-shadow:0 5px 15px rgba(79,70,229,.25);
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px
+.section-title h2{
+  font-size:17px;
+  font-weight:800;
 }
 
-@media(max-width:520px){
-.grid{
-grid-template-columns:1fr
+.section-title p{
+  font-size:12px;
+  color:#6b7280;
+  margin-top:2px;
 }
+
+/* OPTIONS */
+
+.label{
+  font-size:13px;
+  font-weight:700;
+  color:#374151;
+  margin-bottom:9px;
+  display:block;
+}
+
+.option-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+  margin-bottom:18px;
 }
 
 .option{
-border:1.5px solid #ddd;
-border-radius:15px;
-padding:13px 12px;
-background:#fff;
-cursor:pointer;
-font-size:15px;
-min-height:50px;
-text-align:left
+  border:1.5px solid #e5e7eb;
+  background:#fafafa;
+  color:#374151;
+  padding:13px 10px;
+  border-radius:15px;
+  font-size:13px;
+  font-weight:650;
+  cursor:pointer;
+  transition:.2s;
+  text-align:center;
 }
 
-.option.selected{
-background:#111;
-color:#fff;
-border-color:#111
+.option:hover{
+  border-color:#818cf8;
+  transform:translateY(-1px);
 }
 
-input[type=text],
-textarea,
-select{
-width:100%;
-border:1.5px solid #ddd;
-border-radius:15px;
-padding:14px;
-font-size:16px;
-background:#fff
+.option.active{
+  color:#3730a3;
+  background:linear-gradient(135deg,#eef2ff,#f5f3ff);
+  border-color:#6366f1;
+  box-shadow:0 4px 13px rgba(99,102,241,.14);
+}
+
+/* INPUTS */
+
+.field{
+  margin-bottom:17px;
+}
+
+input[type="text"],
+select,
+textarea{
+  width:100%;
+  border:1.5px solid #e5e7eb;
+  background:#fafafa;
+  border-radius:14px;
+  padding:13px 14px;
+  font-family:inherit;
+  font-size:14px;
+  outline:none;
+  transition:.2s;
 }
 
 textarea{
-min-height:105px;
-resize:vertical
+  min-height:90px;
+  resize:vertical;
 }
 
-input[type=file]{
-width:100%;
-padding:13px;
-border:1.5px dashed #ccc;
-border-radius:15px;
-background:#f7f7f8
+input[type="text"]:focus,
+select:focus,
+textarea:focus{
+  border-color:#6366f1;
+  background:white;
+  box-shadow:0 0 0 4px rgba(99,102,241,.08);
 }
 
-.file-note,
-.small{
-font-size:13px;
-color:#6b7280;
-margin-top:7px
+/* UPLOAD */
+
+.upload-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:18px;
 }
 
-.check{
-display:flex;
-gap:11px;
-align-items:flex-start;
-margin-top:18px;
-font-weight:700;
-line-height:1.35
+.upload{
+  position:relative;
 }
 
-.check input{
-width:22px;
-height:22px;
-accent-color:#111
+.upload label{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:105px;
+  padding:15px;
+  border:1.5px dashed #c7d2fe;
+  border-radius:16px;
+  background:#f8f9ff;
+  cursor:pointer;
+  text-align:center;
+  transition:.2s;
 }
 
-.primary{
-width:100%;
-border:0;
-border-radius:18px;
-background:#111;
-color:#fff;
-padding:17px;
-font-size:18px;
-font-weight:800;
-cursor:pointer;
-margin-top:22px
+.upload label:hover{
+  background:#eef2ff;
+  border-color:#6366f1;
 }
 
-.secondary{
-border:1px solid #ddd;
-background:#fff;
-border-radius:14px;
-padding:12px 15px;
-font-weight:700;
-cursor:pointer
+.upload-icon{
+  font-size:25px;
+  margin-bottom:6px;
 }
 
-.output{
-background:#111;
-color:#fff;
-border-radius:20px;
-padding:20px;
-min-height:230px;
-white-space:pre-wrap;
-line-height:1.55;
-font-size:15px;
-overflow-wrap:anywhere
+.upload strong{
+  font-size:13px;
 }
 
-.actions{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-top:12px
+.upload small{
+  color:#6b7280;
+  font-size:10px;
+  margin-top:4px;
+}
+
+.upload input{
+  display:none;
+}
+
+.file-name{
+  margin-top:7px;
+  font-size:11px;
+  color:#4f46e5;
+  word-break:break-word;
+}
+
+/* CHECKBOX */
+
+.checkbox-box{
+  display:flex;
+  align-items:flex-start;
+  gap:11px;
+  padding:14px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#f8fafc,#eef2ff);
+  border:1px solid #e0e7ff;
+  margin-bottom:4px;
+}
+
+.checkbox-box input{
+  width:18px;
+  height:18px;
+  accent-color:#4f46e5;
+  margin-top:1px;
+}
+
+.checkbox-box strong{
+  display:block;
+  font-size:13px;
+}
+
+.checkbox-box span{
+  display:block;
+  color:#6b7280;
+  font-size:11px;
+  line-height:1.4;
+  margin-top:3px;
+}
+
+/* OUTPUT */
+
+.output-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px;
+  margin-bottom:18px;
+}
+
+.output-option{
+  border:1.5px solid #e5e7eb;
+  background:#fafafa;
+  padding:14px 9px;
+  border-radius:15px;
+  text-align:center;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.output-option.active{
+  background:linear-gradient(135deg,#ecfdf5,#eef2ff);
+  border-color:#6366f1;
+  color:#3730a3;
+}
+
+/* BUTTON */
+
+.generate{
+  width:100%;
+  border:none;
+  border-radius:17px;
+  padding:16px;
+  color:white;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+  background:linear-gradient(135deg,#111827,#4f46e5 60%,#7c3aed);
+  box-shadow:0 10px 25px rgba(79,70,229,.25);
+  transition:.2s;
+}
+
+.generate:hover{
+  transform:translateY(-1px);
+  box-shadow:0 13px 30px rgba(79,70,229,.3);
+}
+
+.generate:active{
+  transform:scale(.99);
+}
+
+/* RESULT */
+
+.result{
+  display:none;
+}
+
+.result.show{
+  display:block;
+}
+
+.result-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.result-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.result-title-icon{
+  width:39px;
+  height:39px;
+  border-radius:13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#dcfce7,#dbeafe);
+  font-size:19px;
+}
+
+.result-title h2{
+  font-size:17px;
 }
 
 .badges{
-display:flex;
-gap:7px;
-flex-wrap:wrap;
-margin-top:12px
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:13px;
 }
 
 .badge{
-background:#eee;
-border-radius:999px;
-padding:7px 10px;
-font-size:12px;
-font-weight:700
+  background:#eef2ff;
+  color:#4338ca;
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:10px;
+  font-weight:750;
 }
+
+.prompt-box{
+  background:#111827;
+  color:#e5e7eb;
+  border-radius:18px;
+  padding:17px;
+  font-size:12px;
+  line-height:1.65;
+  white-space:pre-wrap;
+  word-break:break-word;
+  max-height:480px;
+  overflow:auto;
+}
+
+.result-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:12px;
+}
+
+.secondary{
+  border:none;
+  border-radius:14px;
+  padding:13px;
+  background:#eef2ff;
+  color:#3730a3;
+  font-weight:750;
+  cursor:pointer;
+}
+
+.danger{
+  background:#fef2f2;
+  color:#b91c1c;
+}
+
+/* NOTICE */
 
 .notice{
-background:#f4f4f5;
-border-radius:15px;
-padding:13px;
-font-size:13px;
-line-height:1.45;
-margin-top:12px
+  font-size:11px;
+  line-height:1.5;
+  color:#6b7280;
+  background:#f9fafb;
+  border-radius:13px;
+  padding:11px 12px;
+  margin-top:-5px;
+  margin-bottom:17px;
+  border:1px solid #eef0f3;
 }
 
-.hidden{
-display:none
+/* FOOTER */
+
+.footer{
+  text-align:center;
+  color:#9ca3af;
+  font-size:11px;
+  padding:8px 0 20px;
+}
+
+/* MOBILE */
+
+@media(max-width:520px){
+  .container{
+    padding:12px 10px 40px;
+  }
+
+  .header{
+    border-radius:22px;
+    padding:22px 18px;
+  }
+
+  .card{
+    padding:17px;
+    border-radius:21px;
+  }
+
+  .option-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .upload-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:350px){
+  .option-grid,
+  .output-grid,
+  .upload-grid{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>✨ Prompt IA</h1>
-<p>Crie prompts mais precisos para imagens e vídeos com IA</p>
-</header>
+<div class="container">
 
-<main class="container">
+  <!-- HEADER -->
 
-<section class="card">
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">✨</div>
+      <div>
+        <h1>Prompt IA</h1>
+        <p>Crie prompts profissionais com inteligência artificial</p>
+      </div>
+    </div>
 
-<h2>1. Tipo de conteúdo</h2>
+    <div class="header-description">
+      Crie prompts para imagens, vídeos, POV, UGC, TikTok Shop,
+      unboxing e recriação de referências.
+    </div>
+  </header>
 
-<div class="grid" id="tipo">
 
-<button class="option selected" data-v="Imagem">
-🖼️ Imagem
-</button>
+  <!-- 1 -->
 
-<button class="option" data-v="Vídeo">
-🎬 Vídeo
-</button>
+  <section class="card">
 
-<button class="option" data-v="POV">
-👁️ POV
-</button>
+    <div class="section-title">
+      <div class="number">1</div>
+      <div>
+        <h2>Tipo de conteúdo</h2>
+        <p>Escolha o tipo de prompt que deseja criar</p>
+      </div>
+    </div>
 
-<button class="option" data-v="UGC">
-📱 UGC
-</button>
+    <div class="option-grid" id="tipoGrid">
 
-<button class="option" data-v="Produto / TikTok Shop">
-🛍️ Produto / TikTok Shop
-</button>
+      <button class="option active" data-tipo="Imagem">
+        🖼️ Imagem
+      </button>
 
-<button class="option" data-v="Unboxing">
-📦 Unboxing
-</button>
+      <button class="option" data-tipo="Vídeo">
+        🎬 Vídeo
+      </button>
 
-<button class="option" data-v="Recriar vídeo">
-🔄 Recriar vídeo
-</button>
+      <button class="option" data-tipo="POV">
+        👁️ POV
+      </button>
 
-<button class="option" data-v="Foto + Vídeo">
-📸 + 🎬 Foto + Vídeo
-</button>
+      <button class="option" data-tipo="UGC">
+        📱 UGC
+      </button>
+
+      <button class="option" data-tipo="Produto / TikTok Shop">
+        🛍️ TikTok Shop
+      </button>
+
+      <button class="option" data-tipo="Unboxing">
+        📦 Unboxing
+      </button>
+
+      <button class="option" data-tipo="Recriar vídeo">
+        🔄 Recriar vídeo
+      </button>
+
+      <button class="option" data-tipo="Foto + Vídeo">
+        🖼️ + 🎬 Foto + Vídeo
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- 2 -->
+
+  <section class="card">
+
+    <div class="section-title">
+      <div class="number">2</div>
+      <div>
+        <h2>Configure seu prompt</h2>
+        <p>Defina exatamente o que a IA deve criar</p>
+      </div>
+    </div>
+
+
+    <!-- UPLOADS -->
+
+    <div class="label">Referências</div>
+
+    <div class="upload-grid">
+
+      <div class="upload">
+        <label for="foto">
+          <div class="upload-icon">📷</div>
+          <strong>Adicionar foto</strong>
+          <small>Produto / referência</small>
+        </label>
+
+        <input type="file" id="foto" accept="image/*">
+
+        <div class="file-name" id="fotoNome"></div>
+      </div>
+
+
+      <div class="upload">
+        <label for="video">
+          <div class="upload-icon">🎥</div>
+          <strong>Adicionar vídeo</strong>
+          <small>Movimento / referência</small>
+        </label>
+
+        <input type="file" id="video" accept="video/*">
+
+        <div class="file-name" id="videoNome"></div>
+      </div>
+
+    </div>
+
+    <div class="notice">
+      A foto será usada como referência do produto e o vídeo como referência
+      de movimento, ação, enquadramento e estilo. A análise automática dos
+      arquivos será adicionada na próxima etapa de integração com IA.
+    </div>
+
+
+    <!-- APRESENTADOR -->
+
+    <div class="label">Quem apresenta o produto?</div>
+
+    <div class="option-grid" id="apresentadorGrid">
+
+      <button class="option active" data-apresentador="Modelo">
+        👩 Modelo
+      </button>
+
+      <button class="option" data-apresentador="Somente mãos">
+        ✋ Somente mãos
+      </button>
+
+      <button class="option" data-apresentador="Produto sozinho">
+        📦 Produto sozinho
+      </button>
+
+      <button class="option" data-apresentador="POV / primeira pessoa">
+        👁️ POV
+      </button>
+
+    </div>
+
+
+    <!-- AÇÃO -->
+
+    <div class="field">
+
+      <label class="label">O que a pessoa deve fazer?</label>
+
+      <textarea
+        id="acaoModelo"
+        placeholder="Ex.: pegar a roupa, levantar, apresentar frente e costas, passar a mão sobre o tecido..."
+      ></textarea>
+
+    </div>
+
+
+    <!-- CENÁRIO -->
+
+    <div class="field">
+
+      <label class="label">Cenário</label>
+
+      <input
+        type="text"
+        id="cenario"
+        placeholder="Ex.: quarto moderno, cama elegante, sala, cozinha..."
+      >
+
+    </div>
+
+
+    <!-- MOVIMENTO -->
+
+    <div class="field">
+
+      <label class="label">Ação / movimento</label>
+
+      <input
+        type="text"
+        id="movimento"
+        placeholder="Ex.: levantar o produto lentamente e aproximar da câmera"
+      >
+
+    </div>
+
+
+    <!-- CÂMERA -->
+
+    <div class="field">
+
+      <label class="label">Movimento da câmera</label>
+
+      <select id="camera">
+
+        <option>Zoom suave</option>
+        <option>Câmera fixa</option>
+        <option>Travelling suave</option>
+        <option>Movimento de mão natural</option>
+        <option>Close-up no produto</option>
+        <option>POV aproximando do produto</option>
+        <option>Movimento cinematográfico</option>
+
+      </select>
+
+    </div>
+
+
+    <!-- ILUMINAÇÃO -->
+
+    <div class="field">
+
+      <label class="label">Iluminação</label>
+
+      <select id="iluminacao">
+
+        <option>Iluminação natural suave</option>
+        <option>Iluminação cinematográfica</option>
+        <option>Luz de janela</option>
+        <option>Luz quente aconchegante</option>
+        <option>Iluminação profissional de estúdio</option>
+
+      </select>
+
+    </div>
+
+
+    <!-- FORMATO -->
+
+    <div class="field">
+
+      <label class="label">Formato</label>
+
+      <select id="formato">
+
+        <option value="9:16 vertical">9:16 vertical</option>
+        <option value="16:9 horizontal">16:9 horizontal</option>
+        <option value="1:1 quadrado">1:1 quadrado</option>
+
+      </select>
+
+    </div>
+
+
+    <!-- DURAÇÃO -->
+
+    <div class="field">
+
+      <label class="label">Duração do vídeo</label>
+
+      <select id="duracao">
+
+        <option>5 segundos</option>
+        <option selected>8 segundos</option>
+        <option>10 segundos</option>
+        <option>15 segundos</option>
+        <option>20 segundos</option>
+
+      </select>
+
+    </div>
+
+
+    <!-- PRESERVAR -->
+
+    <div class="checkbox-box">
+
+      <input type="checkbox" id="preservar" checked>
+
+      <div>
+        <strong>🔒 Preservar o produto exatamente</strong>
+
+        <span>
+          Manter cor, modelo, formato, tecido, textura, acabamento,
+          proporções, detalhes e características originais.
+        </span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- 3 -->
+
+  <section class="card">
+
+    <div class="section-title">
+      <div class="number">3</div>
+
+      <div>
+        <h2>O que você quer fazer com o prompt?</h2>
+        <p>Escolha o resultado desejado antes de gerar</p>
+      </div>
+    </div>
+
+
+    <div class="output-grid">
+
+      <button class="output-option active" data-saida="Prompt">
+        📝<br>
+        Prompt
+      </button>
+
+      <button class="output-option" data-saida="Gerar Imagem">
+        🖼️<br>
+        Gerar Imagem
+      </button>
+
+      <button class="output-option" data-saida="Gerar Vídeo">
+        🎬<br>
+        Gerar Vídeo
+      </button>
+
+      <button class="output-option" data-saida="Prompt + Imagem">
+        ✨<br>
+        Prompt + Imagem
+      </button>
+
+      <button class="output-option" data-saida="Prompt + Vídeo">
+        🚀<br>
+        Prompt + Vídeo
+      </button>
+
+    </div>
+
+
+    <button class="generate" id="gerar">
+      ✨ GERAR PROMPT
+    </button>
+
+  </section>
+
+
+  <!-- RESULTADO -->
+
+  <section class="card result" id="resultado">
+
+    <div class="result-header">
+
+      <div class="result-title">
+
+        <div class="result-title-icon">
+          ✨
+        </div>
+
+        <div>
+          <h2>Prompt gerado</h2>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="badges">
+
+      <span class="badge" id="badgeTipo">Imagem</span>
+
+      <span class="badge" id="badgeFormato">
+        9:16 vertical
+      </span>
+
+      <span class="badge" id="badgeApresentador">
+        Modelo
+      </span>
+
+      <span class="badge" id="badgeSaida">
+        Prompt
+      </span>
+
+    </div>
+
+
+    <div class="prompt-box" id="promptGerado"></div>
+
+
+    <div class="result-actions">
+
+      <button class="secondary" id="copiar">
+        📋 Copiar prompt
+      </button>
+
+      <button class="secondary danger" id="limpar">
+        🗑️ Limpar
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <div class="footer">
+    Prompt IA • Gerador inteligente de prompts
+  </div>
 
 </div>
-
-</section>
-
-
-<section class="card">
-
-<h2>2. Configure seu prompt</h2>
-
-<label class="title">
-Foto do produto / referência
-</label>
-
-<input type="file" id="foto" accept="image/*">
-
-<div class="file-note" id="fotoNome">
-Nenhuma foto selecionada.
-</div>
-
-
-<label class="title">
-Vídeo de referência
-</label>
-
-<input type="file" id="video" accept="video/*">
-
-<div class="file-note" id="videoNome">
-Nenhum vídeo selecionado.
-</div>
-
-
-<div class="notice">
-Nesta versão, os arquivos são selecionados como referência. A análise automática real de foto e vídeo será conectada posteriormente por uma API segura.
-</div>
-
-
-<label class="title">
-Quem apresenta o produto?
-</label>
-
-<div class="grid" id="apresentador">
-
-<button class="option selected" data-v="Modelo">
-👩 Modelo
-</button>
-
-<button class="option" data-v="Somente mãos">
-👐 Somente mãos
-</button>
-
-<button class="option" data-v="Produto sozinho">
-📦 Produto sozinho
-</button>
-
-<button class="option" data-v="POV / primeira pessoa">
-👁️ POV / primeira pessoa
-</button>
-
-</div>
-
-
-<div id="modeloBox">
-
-<label class="title">
-Ação da modelo
-</label>
-
-<textarea id="acaoModelo">a modelo segura o produto com suas próprias mãos e apresenta a peça claramente para a câmera</textarea>
-
-</div>
-
-
-<label class="title">
-Cenário
-</label>
-
-<input
-type="text"
-id="cenario"
-value="quarto aconchegante e bem organizado"
->
-
-
-<label class="title">
-Ação / movimento
-</label>
-
-<textarea id="acao">apresentar o produto de forma natural e clara para a câmera</textarea>
-
-
-<label class="title">
-Movimento da câmera
-</label>
-
-<input
-type="text"
-id="camera"
-value="zoom suave"
->
-
-
-<label class="title">
-Iluminação
-</label>
-
-<input
-type="text"
-id="luz"
-value="iluminação natural suave e cinematográfica"
->
-
-
-<label class="title">
-Formato
-</label>
-
-<div class="grid" id="formato">
-
-<button class="option selected" data-v="9:16 vertical">
-9:16 vertical
-</button>
-
-<button class="option" data-v="16:9 horizontal">
-16:9 horizontal
-</button>
-
-<button class="option" data-v="1:1 quadrado">
-1:1 quadrado
-</button>
-
-</div>
-
-
-<div id="duracaoBox">
-
-<label class="title">
-Duração do vídeo
-</label>
-
-<select id="duracao">
-
-<option>5 segundos</option>
-<option>8 segundos</option>
-<option>10 segundos</option>
-<option>15 segundos</option>
-<option>20 segundos</option>
-
-</select>
-
-</div>
-
-
-<label class="check">
-
-<input
-type="checkbox"
-id="preservar"
-checked
->
-
-<span>
-Preservar o produto exatamente como na referência
-</span>
-
-</label>
-
-</section>
-
-
-<section class="card">
-
-<h2>
-3. O que você quer fazer com o prompt?
-</h2>
-
-<div class="grid" id="saida">
-
-<button class="option selected" data-v="Prompt">
-📝 Prompt
-</button>
-
-<button class="option" data-v="Gerar Imagem">
-🖼️ Gerar Imagem
-</button>
-
-<button class="option" data-v="Gerar Vídeo">
-🎬 Gerar Vídeo
-</button>
-
-<button class="option" data-v="Prompt + Imagem">
-📝 + 🖼️ Prompt + Imagem
-</button>
-
-<button class="option" data-v="Prompt + Vídeo">
-📝 + 🎬 Prompt + Vídeo
-</button>
-
-</div>
-
-
-<button
-class="primary"
-id="gerar"
->
-✨ GERAR PROMPT
-</button>
-
-</section>
-
-
-<section class="card">
-
-<h2>
-4. Prompt gerado
-</h2>
-
-<div
-class="output"
-id="resultado"
->
-Seu prompt aparecerá aqui.
-</div>
-
-<div
-class="badges"
-id="badges"
->
-</div>
-
-<div class="actions">
-
-<button
-class="secondary"
-onclick="copiar()"
->
-📋 Copiar prompt
-</button>
-
-<button
-class="secondary"
-onclick="limpar()"
->
-🧹 Limpar
-</button>
-
-</div>
-
-</section>
-
-</main>
 
 
 <script>
 
-let tipo="Imagem";
-let apresentador="Modelo";
-let formato="9:16 vertical";
-let saida="Prompt";
+let tipo = "Imagem";
+let apresentador = "Modelo";
+let saida = "Prompt";
 
 
-function grupo(id,fn){
+/* TIPO */
 
-document.querySelectorAll("#"+id+" .option").forEach(b=>{
+document.querySelectorAll("[data-tipo]").forEach(botao => {
 
-b.onclick=()=>{
+  botao.addEventListener("click", () => {
 
-document
-.querySelectorAll("#"+id+" .option")
-.forEach(x=>x.classList.remove("selected"));
+    document.querySelectorAll("[data-tipo]").forEach(b =>
+      b.classList.remove("active")
+    );
 
-b.classList.add("selected");
+    botao.classList.add("active");
 
-fn(b.dataset.v);
+    tipo = botao.dataset.tipo;
 
-};
-
-});
-
-}
-
-
-grupo("tipo",v=>{
-
-tipo=v;
-
-interfaceAtual();
+  });
 
 });
 
 
-grupo("apresentador",v=>{
+/* APRESENTADOR */
 
-apresentador=v;
+document.querySelectorAll("[data-apresentador]").forEach(botao => {
 
-interfaceAtual();
+  botao.addEventListener("click", () => {
 
-});
+    document.querySelectorAll("[data-apresentador]").forEach(b =>
+      b.classList.remove("active")
+    );
 
+    botao.classList.add("active");
 
-grupo("formato",v=>{
+    apresentador = botao.dataset.apresentador;
 
-formato=v;
-
-});
-
-
-grupo("saida",v=>{
-
-saida=v;
+  });
 
 });
 
 
-document
-.getElementById("foto")
-.onchange=e=>{
+/* SAÍDA */
 
-document
-.getElementById("fotoNome")
-.textContent=
+document.querySelectorAll("[data-saida]").forEach(botao => {
 
-e.target.files.length
+  botao.addEventListener("click", () => {
 
-?
+    document.querySelectorAll("[data-saida]").forEach(b =>
+      b.classList.remove("active")
+    );
 
-"Foto selecionada: "
-+
-e.target.files[0].name
+    botao.classList.add("active");
 
-:
+    saida = botao.dataset.saida;
 
-"Nenhuma foto selecionada.";
+  });
 
-};
+});
 
 
-document
-.getElementById("video")
-.onchange=e=>{
+/* FOTO */
 
-document
-.getElementById("videoNome")
-.textContent=
+document.getElementById("foto").addEventListener("change", function(){
 
-e.target.files.length
+  const nome = document.getElementById("fotoNome");
 
-?
+  if(this.files.length){
 
-"Vídeo selecionado: "
-+
-e.target.files[0].name
+    nome.textContent = "✓ " + this.files[0].name;
 
-:
+  }else{
 
-"Nenhum vídeo selecionado.";
+    nome.textContent = "";
 
-};
+  }
+
+});
 
 
-function interfaceAtual(){
+/* VÍDEO */
 
-let video=[
-"Vídeo",
-"POV",
-"UGC",
-"Unboxing",
-"Recriar vídeo",
-"Foto + Vídeo"
-].includes(tipo);
+document.getElementById("video").addEventListener("change", function(){
 
-document
-.getElementById("duracaoBox")
-.classList
-.toggle("hidden",!video);
+  const nome = document.getElementById("videoNome");
 
-document
-.getElementById("modeloBox")
-.classList
-.toggle(
-"hidden",
-apresentador!=="Modelo"
-);
+  if(this.files.length){
 
-}
+    nome.textContent = "✓ " + this.files[0].name;
+
+  }else{
+
+    nome.textContent = "";
+
+  }
+
+});
+
+
+/* GERAR PROMPT */
+
+document.getElementById("gerar").addEventListener("click", gerarPrompt);
 
 
 function gerarPrompt(){
 
-let c=
-document
-.getElementById("cenario")
-.value
-.trim();
+  const cenario =
+    document.getElementById("cenario").value.trim();
 
-let a=
-document
-.getElementById("acao")
-.value
-.trim();
+  const acao =
+    document.getElementById("acaoModelo").value.trim();
 
-let cam=
-document
-.getElementById("camera")
-.value
-.trim();
+  const movimento =
+    document.getElementById("movimento").value.trim();
 
-let luz=
-document
-.getElementById("luz")
-.value
-.trim();
+  const camera =
+    document.getElementById("camera").value;
 
-let dur=
-document
-.getElementById("duracao")
-.value;
+  const iluminacao =
+    document.getElementById("iluminacao").value;
 
-let preservar=
-document
-.getElementById("preservar")
-.checked;
+  const formato =
+    document.getElementById("formato").value;
 
-let foto=
-document
-.getElementById("foto")
-.files
-.length;
+  const duracao =
+    document.getElementById("duracao").value;
 
-let video=
-document
-.getElementById("video")
-.files
-.length;
+  const preservar =
+    document.getElementById("preservar").checked;
+
+  const temFoto =
+    document.getElementById("foto").files.length > 0;
+
+  const temVideo =
+    document.getElementById("video").files.length > 0;
 
 
-let p="";
+  let prompt = "";
 
 
-if(tipo==="Imagem"){
+  /* TIPO */
 
-p+=
-"CRIAR UMA IMAGEM ESTÁTICA. "+
-"NÃO É VÍDEO. "+
-"NÃO HÁ ANIMAÇÃO E NÃO HÁ MOVIMENTO. ";
+  if(tipo === "Imagem"){
 
-}else{
+    prompt +=
+      "CRIAR UMA IMAGEM ESTÁTICA. " +
+      "NÃO É VÍDEO. NÃO HÁ ANIMAÇÃO E NÃO HÁ MOVIMENTO.\n\n";
 
-p+="CRIAR UM VÍDEO REALISTA. ";
+  }else{
+
+    prompt +=
+      "CRIAR UM VÍDEO REALISTA E ULTRA-HIPER-REALISTA.\n\n";
+
+  }
+
+
+  /* FORMATO */
+
+  prompt +=
+    "FORMATO: " + formato + ".\n";
+
+
+  if(tipo !== "Imagem"){
+
+    prompt +=
+      "DURAÇÃO: " + duracao + ".\n";
+
+  }
+
+
+  prompt += "\n";
+
+
+  /* REFERÊNCIAS */
+
+  if(temFoto && temVideo){
+
+    prompt +=
+      "REFERÊNCIAS: A FOTO DE REFERÊNCIA DEFINE A IDENTIDADE " +
+      "EXATA DO PRODUTO. O VÍDEO DE REFERÊNCIA DEFINE SOMENTE " +
+      "A AÇÃO, MOVIMENTO, ENQUADRAMENTO E LINGUAGEM VISUAL. " +
+      "NÃO ALTERAR O PRODUTO DA FOTO PARA COPIAR O PRODUTO DO VÍDEO.\n\n";
+
+  }else if(temFoto){
+
+    prompt +=
+      "Usar a foto de referência para identificar exatamente o produto " +
+      "e reproduzi-lo fielmente na cena.\n\n";
+
+  }else if(temVideo){
+
+    prompt +=
+      "Usar o vídeo de referência somente para ação, movimento, " +
+      "enquadramento, ritmo e linguagem visual.\n\n";
+
+  }
+
+
+  /* APRESENTADOR */
+
+  if(apresentador === "Modelo"){
+
+    prompt +=
+      "APRESENTADOR: Uma única modelo feminina apresenta o produto. " +
+      "As mãos utilizadas na apresentação pertencem exclusivamente " +
+      "à própria modelo. NÃO adicionar mãos, braços, pessoas, avatares " +
+      "ou apresentadores extras. NÃO criar mãos flutuantes ou duplicadas.\n\n";
+
+    if(acao){
+
+      prompt +=
+        "AÇÃO DA MODELO: " + acao + "\n\n";
+
+    }
+
+  }
+
+
+  if(apresentador === "Somente mãos"){
+
+    prompt +=
+      "APRESENTAÇÃO: Mostrar SOMENTE DUAS MÃOS FEMININAS " +
+      "apresentando o produto. NÃO mostrar modelo, rosto, corpo " +
+      "ou qualquer outra pessoa. NÃO adicionar mãos ou braços extras " +
+      "além das duas mãos solicitadas.\n\n";
+
+    if(acao){
+
+      prompt +=
+        "AÇÃO DAS MÃOS: " + acao + "\n\n";
+
+    }
+
+  }
+
+
+  if(apresentador === "Produto sozinho"){
+
+    prompt +=
+      "APRESENTAÇÃO: Mostrar SOMENTE O PRODUTO. " +
+      "NÃO mostrar modelo, pessoa, avatar, mãos ou braços.\n\n";
+
+    if(acao){
+
+      prompt +=
+        "MOVIMENTO DO PRODUTO: " + acao + "\n\n";
+
+    }
+
+  }
+
+
+  if(apresentador === "POV / primeira pessoa"){
+
+    prompt +=
+      "APRESENTAÇÃO: Cena em PRIMEIRA PESSOA (POV), " +
+      "como se a câmera fosse os olhos da pessoa. " +
+      "Não mostrar uma segunda pessoa ou apresentador separado.\n\n";
+
+    if(acao){
+
+      prompt +=
+        "AÇÃO EM POV: " + acao + "\n\n";
+
+    }
+
+  }
+
+
+  /* CENÁRIO */
+
+  prompt +=
+    "CENÁRIO: " +
+    (cenario || "ambiente doméstico elegante e realista") +
+    ".\n\n";
+
+
+  /* MOVIMENTO */
+
+  if(movimento){
+
+    prompt +=
+      "MOVIMENTO PRINCIPAL: " +
+      movimento +
+      ".\n\n";
+
+  }
+
+
+  /* CÂMERA */
+
+  prompt +=
+    "MOVIMENTO DA CÂMERA: " +
+    camera +
+    ".\n\n";
+
+
+  /* ILUMINAÇÃO */
+
+  prompt +=
+    "ILUMINAÇÃO: " +
+    iluminacao +
+    ".\n\n";
+
+
+  /* IMAGEM */
+
+  if(tipo === "Imagem"){
+
+    prompt +=
+      "COMPOSIÇÃO: Fotografia profissional estática, " +
+      "sem movimento, com enquadramento limpo e foco total no produto.\n\n";
+
+  }
+
+
+  /* PRODUTO */
+
+  if(preservar){
+
+    prompt +=
+      "IMPORTANTE: PRESERVAR O PRODUTO EXATAMENTE COMO NA IMAGEM " +
+      "DE REFERÊNCIA, SEM ALTERAR COR, MODELO, FORMATO, TECIDO, " +
+      "TEXTURA, ACABAMENTO, PROPORÇÕES, DETALHES OU CARACTERÍSTICAS " +
+      "ORIGINAIS.\n" +
+      "NÃO substituir, modificar, adicionar ou remover partes do produto.\n\n";
+
+  }
+
+
+  /* REALISMO */
+
+  prompt +=
+    "QUALIDADE: Ultra-hiper-realista, 4K, alta definição, " +
+    "texturas naturais, materiais fisicamente corretos, iluminação " +
+    "realista, profundidade de campo natural e aparência profissional.\n\n";
+
+
+  /* CONSISTÊNCIA */
+
+  prompt +=
+    "CONSISTÊNCIA: Manter composição coerente, anatomia correta " +
+    "quando houver pessoas, física natural e continuidade visual. " +
+    "Não adicionar objetos, pessoas, mãos, braços ou elementos " +
+    "não solicitados. Não criar deformações, duplicações, membros " +
+    "extras, texto aleatório ou logotipos inventados.\n\n";
+
+
+  /* SAÍDA */
+
+  if(saida === "Gerar Imagem"){
+
+    prompt +=
+      "RESULTADO DESEJADO: gerar somente UMA IMAGEM ESTÁTICA.";
+
+  }else if(saida === "Gerar Vídeo"){
+
+    prompt +=
+      "RESULTADO DESEJADO: gerar somente UM VÍDEO.";
+
+  }else if(saida === "Prompt + Imagem"){
+
+    prompt +=
+      "RESULTADO DESEJADO: gerar o prompt e UMA IMAGEM ESTÁTICA.";
+
+  }else if(saida === "Prompt + Vídeo"){
+
+    prompt +=
+      "RESULTADO DESEJADO: gerar o prompt e UM VÍDEO.";
+
+  }else{
+
+    prompt +=
+      "RESULTADO DESEJADO: somente o prompt.";
+
+  }
+
+
+  /* MOSTRAR RESULTADO */
+
+  document.getElementById("promptGerado").textContent = prompt;
+
+  document.getElementById("badgeTipo").textContent = tipo;
+
+  document.getElementById("badgeFormato").textContent = formato;
+
+  document.getElementById("badgeApresentador").textContent =
+    apresentador;
+
+  document.getElementById("badgeSaida").textContent =
+    saida;
+
+
+  document.getElementById("resultado")
+    .classList.add("show");
+
+
+  document.getElementById("resultado")
+    .scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
 
 }
 
 
-p+=
-"Ultra-hiper-realista, 4K, formato "
-+
-formato
-+
-". ";
+/* COPIAR */
 
-p+=
-"Cena profissional para conteúdo digital. "+
-"Tipo de conteúdo: "
-+
-tipo
-+
-". ";
+document.getElementById("copiar").addEventListener("click", async () => {
 
-p+=
-"Cenário: "
-+
-(c||"ambiente profissional e natural")
-+
-". ";
+  const texto =
+    document.getElementById("promptGerado").textContent;
 
+  try{
 
-if(apresentador==="Modelo"){
+    await navigator.clipboard.writeText(texto);
 
-let am=
-document
-.getElementById("acaoModelo")
-.value
-.trim();
+    const botao =
+      document.getElementById("copiar");
 
-p+=
-"Uma única modelo feminina apresenta o produto. "
-+
-(am||
-"A modelo segura o produto com suas próprias mãos e apresenta para a câmera")
-+
-". ";
+    const original =
+      botao.textContent;
 
-p+=
-"AS MÃOS VISÍVEIS DEVEM PERTENCER EXCLUSIVAMENTE À PRÓPRIA MODELO. ";
+    botao.textContent = "✅ Copiado!";
 
-p+=
-"Não adicionar mãos, braços, pessoas, avatares ou apresentadores extras. ";
+    setTimeout(() => {
 
-p+=
-"Não criar mãos flutuantes, duplicadas ou pertencentes a outra pessoa. ";
+      botao.textContent = original;
 
-}
+    },1500);
 
+  }catch(e){
 
-if(apresentador==="Somente mãos"){
+    alert("Não foi possível copiar automaticamente. Selecione o texto e copie.");
 
-p+=
-"Mostrar somente duas mãos femininas apresentando o produto. ";
+  }
 
-p+=
-"Não mostrar modelo, rosto, corpo ou pessoa. ";
-
-p+=
-"Não adicionar mãos ou braços extras além das duas mãos solicitadas. ";
-
-}
-
-
-if(apresentador==="Produto sozinho"){
-
-p+=
-"Mostrar somente o produto. "+
-"Não mostrar modelo, pessoa, avatar, mãos ou braços. ";
-
-}
-
-
-if(apresentador==="POV / primeira pessoa"){
-
-p+=
-"Cena em primeira pessoa (POV), como se a câmera fosse os olhos da pessoa. ";
-
-p+=
-"Não mostrar uma segunda pessoa ou apresentador separado. ";
-
-}
-
-
-p+=
-"Ação principal: "
-+
-(a||"apresentar o produto claramente")
-+
-". ";
-
-p+=
-"Movimento da câmera: "
-+
-(cam||"câmera estável")
-+
-". ";
-
-p+=
-"Iluminação: "
-+
-(luz||"iluminação natural suave")
-+
-". ";
-
-
-if([
-"Vídeo",
-"POV",
-"UGC",
-"Unboxing",
-"Recriar vídeo",
-"Foto + Vídeo"
-].includes(tipo)){
-
-p+=
-"Duração: "
-+
-dur
-+
-". ";
-
-p+=
-"Movimento natural e contínuo, sem cortes desnecessários e sem mudanças repentinas de cenário ou produto. ";
-
-}
-
-
-if(tipo==="Imagem"){
-
-p+=
-"Composição fotográfica estática, sem movimento. ";
-
-}
-
-
-if(foto){
-
-p+=
-"Usar a foto de referência para identificar exatamente o produto. ";
-
-}
-
-
-if(video){
-
-p+=
-"Usar o vídeo de referência somente para ação, movimento, enquadramento e estilo. ";
-
-}
-
-
-if(foto&&video){
-
-p+=
-"A FOTO define a identidade exata do produto; "+
-"o VÍDEO define somente ação, movimento e linguagem visual. ";
-
-}
-
-
-if(preservar){
-
-p+=
-"IMPORTANTE: preservar o produto exatamente como na imagem de referência, "+
-"sem alterar cor, modelo, formato, tecido, textura, acabamento, proporções, detalhes ou características originais. ";
-
-p+=
-"Não substituir, modificar, adicionar ou remover partes do produto. ";
-
-}
-
-
-p+=
-"Manter aparência ultra-realista, anatomia correta quando houver pessoas, física natural e composição coerente. ";
-
-p+=
-"Não adicionar objetos, pessoas, mãos, braços ou elementos não solicitados. ";
-
-p+=
-"Não criar deformações, duplicações, membros extras, texto aleatório ou logotipos inventados. ";
-
-
-if(saida==="Gerar Imagem"){
-
-p+=
-"RESULTADO DESEJADO: somente uma imagem estática.";
-
-}
-
-else if(saida==="Gerar Vídeo"){
-
-p+=
-"RESULTADO DESEJADO: somente um vídeo.";
-
-}
-
-else if(saida==="Prompt + Imagem"){
-
-p+=
-"RESULTADO DESEJADO: gerar o prompt e uma imagem estática.";
-
-}
-
-else if(saida==="Prompt + Vídeo"){
-
-p+=
-"RESULTADO DESEJADO: gerar o prompt e um vídeo.";
-
-}
-
-else{
-
-p+=
-"RESULTADO DESEJADO: somente o prompt.";
-
-}
-
-
-document
-.getElementById("resultado")
-.textContent=p;
-
-
-document
-.getElementById("badges")
-.innerHTML=
-
-[
-"Tipo: "+tipo,
-"Apresentador: "+apresentador,
-"Formato: "+formato,
-"Saída: "+saida
-]
-
-.map(x=>
-"<span class='badge'>"+
-x+
-"</span>"
-)
-.join("");
-
-
-document
-.getElementById("resultado")
-.scrollIntoView({
-behavior:"smooth",
-block:"center"
 });
 
-}
 
+/* LIMPAR */
 
-function copiar(){
+document.getElementById("limpar").addEventListener("click", () => {
 
-let t=
-document
-.getElementById("resultado")
-.textContent;
+  document.getElementById("promptGerado").textContent = "";
 
-if(t==="Seu prompt aparecerá aqui."){
+  document.getElementById("resultado")
+    .classList.remove("show");
 
-alert("Gere um prompt primeiro.");
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
-return;
-
-}
-
-navigator
-.clipboard
-.writeText(t)
-.then(()=>
-alert("Prompt copiado!")
-);
-
-}
-
-
-function limpar(){
-
-document
-.getElementById("resultado")
-.textContent=
-"Seu prompt aparecerá aqui.";
-
-document
-.getElementById("badges")
-.innerHTML="";
-
-}
-
-
-document
-.getElementById("gerar")
-.onclick=gerarPrompt;
-
-
-interfaceAtual();
+});
 
 </script>
 
